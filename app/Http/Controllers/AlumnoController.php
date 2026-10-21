@@ -12,40 +12,15 @@ use Illuminate\View\View;
 
 class AlumnoController extends Controller
 {
-    public function create(): View {
-        return view('alumno.create', []);
-    }
-    
-    public function destroy(Alumno $alumno): RedirectResponse {
-        //delete from alumno where id = $alumno->id
-        $alumno->delete();
-        //return redirect()->route('index');
-    }
-        
-    public function edit(Alumno $alumno): View {
-        return view('alumno.edit', ['alumno' => $alumno]);
-    }
+    private const RULES = [
+        'nombre'    => 'required|string|max:100|min:2',
+        'apellidos' => 'required|string|max:130|min:3',
+        'fnac'      => 'nullable|date|before_or_equal:today',
+        'nacceso'   => 'nullable|numeric|gte:0|lte:10|decimal:0,2',
+        'genero'    => 'nullable|in:masculino,femenino,otro'
+    ];
 
-    public function index(): View {
-        //$alumnos = 'select * from alumno';
-        $alumnos = Alumno::all();
-        return view('alumno.index', ['alumnos' => $alumnos]);
-    }
-        
-    public function show(Alumno $alumno): View {
-        return view('alumno.show', ['alumno' => $alumno]);
-    }
-        
-    public function store(Request $request): RedirectResponse {
-        //1º validar
-        $rules = [
-            'nombre'    => 'required|string|max:100|min:2',
-            'apellidos' => 'required|string|max:130|min:3',
-            'fnac'      => 'nullable|date|before_or_equal:today',
-            'nacceso'   => 'nullable|numeric|gte:0|lte:10|decimal:0,2',
-            'genero'    => 'nullable|in:masculino,femenino,otro'
-        ];
-        $messages = [
+    private const MESSAGES = [
             // Nombre
             'nombre.required' => 'El nombre es obligatorio.',
             'nombre.string'   => 'El nombre debe ser una cadena de texto.',
@@ -70,8 +45,37 @@ class AlumnoController extends Controller
 
             // Género
             'genero.in' => 'El género debe ser masculino, femenino u otro.',
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
+    ];
+
+    public function create(): View {
+        return view('alumno.create', []);
+    }
+    
+    public function destroy(Alumno $alumno): RedirectResponse {
+        //delete from alumno where id = $alumno->id
+        $alumno->delete();
+        //return redirect()->route('index');
+    }
+        
+    public function edit(Alumno $alumno): View {
+        return view('alumno.edit', ['alumno' => $alumno]);
+    } 
+
+    public function index(): View {
+        //$alumnos = 'select * from alumno';
+        $alumnos = Alumno::all();
+        return view('alumno.index', ['alumnos' => $alumnos]);
+    }
+        
+    public function show(Alumno $alumno): View {
+        return view('alumno.show', ['alumno' => $alumno]);
+    }
+        
+    public function store(Request $request): RedirectResponse {
+        //1º validar
+        //$rules = self::getRules();
+        //$messages =  self::getMessages();
+        $validator = Validator::make($request->all(), self::RULES, self::MESSAGES);
         if($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
