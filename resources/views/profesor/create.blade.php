@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-6 mx-auto">
 
-            <form action="{{ route('alumno.store') }}" method="post">
+            <form action="{{ route('profesor.store') }}" method="post">
                 @csrf 
                 <!--
                 medida de seguridad que se usa con todas las rutas que no sean get
