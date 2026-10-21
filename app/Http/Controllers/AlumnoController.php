@@ -53,8 +53,12 @@ class AlumnoController extends Controller
     
     public function destroy(Alumno $alumno): RedirectResponse {
         //delete from alumno where id = $alumno->id
-        $alumno->delete();
-        //return redirect()->route('index');
+        try {
+            $alumno->delete();
+        }catch(Exception $e) {
+            return back()->withErrors(['error' => 'Error al borrar el alumno',]);
+        }
+        return redirect()->route('alumno.index')->with(['success' => 'Se ha borrado el alumno exitosamente']);
     }
         
     public function edit(Alumno $alumno): View {
@@ -63,6 +67,9 @@ class AlumnoController extends Controller
 
     public function index(): View {
         //$alumnos = 'select * from alumno';
+
+        //Borrar algo de la session
+        //session()->forget('success');
         $alumnos = Alumno::all();
         return view('alumno.index', ['alumnos' => $alumnos]);
     }
@@ -89,14 +96,26 @@ class AlumnoController extends Controller
                 //'apellidos'  => 'Este campo también forma parte de la clave única',
             ]);
         } catch(Exception $e) {
-            echo('global');
-            dd($e);
+            return back()->withInput()->withErrors(['error' => 'Error al crear el alumno',]);
         }
-        return redirect()->route('alumno.index');
+        //Para que la info de la session se quede mucho tiempo, hasta que cierre el navegador
+        //session(['success' => 'Se ha creado el alumno correctamente V2']);
+        return redirect()->route('alumno.index')->with(['success' => 'Se ha creado el alumno correctamente']);
     }
 
     public function update(Request $request, Alumno $alumno): RedirectResponse {
-        $alumno->update($request->all());
+        $validator = Validator::make($request->all(), self::RULES, self::MESSAGES);
+        if($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }    
+        try {
+            $alumno->update($request->all());
+        }catch (UniqueConstraintViolationException $e) {
+            return back()->withInput()->withErrors(['error' => 'Clave única duplicada.',]);
+        }catch(Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error al editar el alumno',]);
+        }
+    
         return redirect()->route('alumno.index');
     }
 

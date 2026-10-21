@@ -19,7 +19,7 @@
             <div class="card text-center">
                 <div class="card-body">
                     <h4 class="card-title">{{ $profesor->especialidad }}</h4>
-                    <h4 class="card-title">{{ $profesor->fecha_alta->format('d/m/Y') }}</h4>
+                    <h4 class="card-title">{{ $profesor->fechalta->format('d/m/Y') }}</h4>
                     <h4 class="card-title">{{ $profesor->salario }} €</h4>
                     <a href="{{ route('profesor.index') }}" class="btn btn-secondary">Back</a>
                     <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>

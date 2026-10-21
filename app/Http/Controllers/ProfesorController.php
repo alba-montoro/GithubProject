@@ -7,6 +7,7 @@ use \Exception;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 
@@ -50,8 +51,12 @@ class ProfesorController extends Controller
 
     public function destroy(Profesor $profesor): RedirectResponse {
         //delete from profesor where id = $profesor->id
-        $profesor->delete();
-        //return redirect()->route('index');
+        try {
+            $profesor->delete();
+        }catch(Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error al borrar el profesor',]);
+        }
+        return redirect()->route('profesor.index')->with(['success' => 'Se ha borrado el profesor exitosamente']);
     }
 
     public function edit(Profesor $profesor): View {
@@ -77,24 +82,50 @@ class ProfesorController extends Controller
         if($validator->fails()) {
             return back()->withInput()->withErrors($validator);
         }
+
+        // Comprobar si ya existe el mismo nombre y apellidos
+        $existe = Profesor::where('nombre', trim($request->nombre))
+                           ->where('apellidos', trim($request->apellidos))
+                           ->exists();
+
+        if ($existe) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'nombre' => 'Ya existe un profesor con ese nombre y apellidos.',
+                ]);
+        }
+
+        //Guardamos
         $profesor = new Profesor($request->all());
+
         try {
             $profesor->save();
         } catch(UniqueConstraintViolationException $e) {
             return back()->withInput()->withErrors([
-                'error' => 'Clave única duplicada.',
-                //'nombre'     => 'Este campo forma parte de la clave única.',
+                //'error' => 'Clave única duplicada.',
+                'nombre'     => 'Este campo forma parte de la clave única.',
                 //'apellidos'  => 'Este campo también forma parte de la clave única',
             ]);
         } catch(Exception $e) {
-            echo('global');
-            dd($e);
+            return back()->withInput()->withErrors(['error' => 'Error al crear el profesor',]);
         }
-        return redirect()->route('profesor.index');
+          
+        return redirect()->route('profesor.index')->with(['success' => 'Se ha creado el profesor correctamente']);
     }
 
     public function update(Request $request, Profesor $profesor): RedirectResponse {
-        $profesor->update($request->all());
+        $validator = Validator::make($request->all(), self::RULES, self::MESSAGES);
+        if($validator->fails()) {
+            return back()->withInput()->withErrors($validator);
+        }
+        try {
+            $profesor->update($request->all());
+        }catch (UniqueConstraintViolationException $e) {
+            return back()->withInput()->withErrors(['error' => 'Clave única duplicada.',]);
+        }catch(Exception $e) {
+            return back()->withInput()->withErrors(['error' => 'Error al editar el profesor',]);
+        }    
         return redirect()->route('profesor.index');
     }
 

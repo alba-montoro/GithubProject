@@ -13,7 +13,7 @@
                 -->
                 <div class="mb-3">
                     <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" value="{{ old('nombre') }}" class="form-control" id="nombre" name="nombre" required maxlength="100" placeholder="Introduce el nombre del alumno">
+                    <input type="text" value="{{ old('nombre') }}" class="form-control" id="nombre" name="nombre" required maxlength="100" placeholder="Introduce el nombre del profesor">
                     @error('nombre')
                     <div class="alert alert-danger" role="alert" style="margin-top: 6px;">
                         {{ $message }}
@@ -22,7 +22,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="apellidos" class="form-label">Apellidos</label>
-                    <input type="text" value="{{ old('apellidos') }}" class="form-control" id="apellidos" name="apellidos" required maxlength="130" placeholder="Introduce los apellidos del alumno">
+                    <input type="text" value="{{ old('apellidos') }}" class="form-control" id="apellidos" name="apellidos" required maxlength="130" placeholder="Introduce los apellidos del profesor">
                     @error('apellidos')
                     <div class="alert alert-danger" role="alert" style="margin-top: 6px;">
                         {{ $message }}

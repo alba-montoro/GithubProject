@@ -14,4 +14,17 @@ class Profesor extends Model
     
     //campos que hay que rellenar antes de guardar un objeto en la base de datos
     protected $fillable = ['nombre', 'apellidos', 'especialidad', 'fechalta', 'salario'];
-}
+
+     protected function casts(): array
+    {
+        return [
+            'fechalta' => 'date',
+            'salario' => 'decimal:2',
+        ];
+    }
+
+
+
+
+    }
+

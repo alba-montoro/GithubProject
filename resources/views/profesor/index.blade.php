@@ -21,7 +21,8 @@
                         <td>{{ $profesor->nombre }}</td>
                         <td>{{ $profesor->apellidos }}</td>
                         <td>{{ $profesor->especialidad }}</td>
-                        <td>{{ $profesor->fechalta->format('d/m/Y') }}</td>
+                        <!-- Para que ponga "sin fecha" -->
+                        <td>{{ $profesor->fechalta?->format('d/m/Y') ?? 'Sin fecha' }}</td>
                         <td>{{ $profesor->salario }} €</td>
 
                         <td>
