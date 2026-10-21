@@ -21,7 +21,7 @@
                         <td>{{ $profesor->nombre }}</td>
                         <td>{{ $profesor->apellidos }}</td>
                         <td>{{ $profesor->especialidad }}</td>
-                        <td>{{ $profesor->fecha_alta->format('d/m/Y') }}</td>
+                        <td>{{ $profesor->fechalta->format('d/m/Y') }}</td>
                         <td>{{ $profesor->salario }} €</td>
 
                         <td>
