@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Modulo;
+use App\Models\Modulo;
 use Exception;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -13,10 +13,9 @@ class ModuloController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(): View {
         //$modulos = Modulo::all();
-        $modulos = Modulo::orderBy('nombre');
+        $modulos = Modulo::orderBy('nombre')->get();
         //return view('modulo.index', ['modulos' => $modulos]);
         return view('modulo.index', compact('modulos'));
     }
@@ -60,17 +59,25 @@ class ModuloController extends Controller
     /**
      * Display the specified resource.
      */
+    //public function show(Modulo $modulo)
+
+    // Con string id, Laravel no nos pone el error 404 automaticamente
+    // si pongo un id de una tupla que no existe. Tenemos que programarlo nosotros.
     public function show(string $id)
     {
-        //a veces falla la conversión
+        //Intenta encontrarme el id
+        $modulo = Modulo::find($id);
+        if ($modulo == null) {
+            abort(404);
+        }
         return view('modulo.show', compact('modulo'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Modulo $modulo)
-    {
+    public function edit(Modulo $modulo) {
+        
         return view('modulo.edit', compact('modulo'));
     }
 
