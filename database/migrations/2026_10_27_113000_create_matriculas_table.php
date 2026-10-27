@@ -13,9 +13,16 @@ return new class extends Migration
     {
         Schema::create('matricula', function (Blueprint $table) {
             $table->id();
-            // idalumno, nota, curso
-            
+            $table->foreignId('alumno_id');
+            $table->foreignId('modulo_id');
+            $table->decimal('nota', 4, 2)->nullable;
+            $table->unsignedSmallInteger('curso');
             $table->timestamps();
+            // Un mismo alumno no se puede matricular dos veces en el mismo curso 
+            $table->unique(['alumno_id', 'modulo_id', 'curso']);
+            // Metemos los constraints
+            $table->foreign('alumno_id')->references('id')->on('alumno')->onDelete('cascade');  // Se borran todos
+            $table->foreign('modulo_id')->references('id')->on('modulo')->onDelete('restrict'); //
         });
     }
 
