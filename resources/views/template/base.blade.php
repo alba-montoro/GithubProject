@@ -35,15 +35,14 @@
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('portfolio') }}">Portfolio</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('about') }}">About</a></li>
                         <!--<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('array') }}">Array</a></li>-->
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('alumno.index') }}">Alumno</a></li>
-                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('profesor.index') }}">Profesor</a></li>
+                        <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ route('gestion') }}">Gestión</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <!-- Masthead-->
         <header class="masthead bg-primary text-white text-center">
-            @error('error') <!-- Si llega un mensaje de tipo error con nombre 'error' -->
+            @error('error') <!-- si llega un mensaje de tipo error con nombre error -->
             <div class="row">
                 <div class="col-md-4 mx-auto">
                     <div class="alert alert-danger" role="alert">
@@ -52,8 +51,7 @@
                 </div>
             </div>
             @enderror
-            <!-- Mensaje de aceptación -->
-            @session('success') <!-- Si llega en la sesion de nombre 'success' -->
+            @session('success') <!-- si llega una variable en la sesión de nombre success -->
             <div class="row">
                 <div class="col-md-4 mx-auto">
                     <div class="alert alert-info" role="alert">

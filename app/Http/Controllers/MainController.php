@@ -54,6 +54,10 @@ class MainController extends Controller
     /*function aboutMetodo(): View {
         return view('about');
     }*/
+    
+    function gestion(): View {
+        return view('gestion');
+    }
 
     function index(): View {
         return view('index');
@@ -62,4 +66,5 @@ class MainController extends Controller
     function portfolio(): View {
         return view('portfolio');
     }
+
 }
