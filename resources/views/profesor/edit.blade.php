@@ -41,7 +41,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="fechalta" class="form-label">Fecha de alta</label>
-                    <input type="date" value="{{ old('fechalta', $profesor->fechalta) }}" class="form-control" id="fechalta" name="fechalta" max="{{ now()->format('Y-m-d') }}">
+                    <input type="date" value="{{ old('fechalta', \Carbon\Carbon::parse($profesor->fechalta)->format('Y-m-d')) }}" class="form-control" id="fechalta" name="fechalta" max="{{ now()->format('Y-m-d') }}">
                     @error('fechalta')
                     <div class="alert alert-danger" role="alert" style="margin-top: 6px;">
                         {{ $message }}
