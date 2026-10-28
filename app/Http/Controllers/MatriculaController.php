@@ -45,29 +45,39 @@ class MatriculaController extends Controller
         return $this->getCurso() . '/' . $this->getCurso() + 1;
     }
 
-
-    public function index()
-    {
-        $lista = [
-            'uno' => 121,
-            121   => 'dos',
-            'tres'=> 'cuatro',
-
-        ];
-
-        var_dump($lista);
-        echo '<pre>' . var_export($lista, true) . '</pre>';
-
-        foreach($lista as $elemento) { /* Le estoy diciendo que solo quiero ver los elementos */
-            echo $elemento . '<br>';
-        }
-
-        foreach($lista as $indice => $elemento) { /* Le estoy diciendo que muestre la posicion y el valor */
-            echo $elemento . ' está en la posición ' . $indice . '<br>'; 
-        }
-        dd($lista);
-        
+    public function index() : View {
+        $matriculas = Matricula::all();
+        // $matriculas = Matricula::orderBy('alfabeticamente')->get();
+    
+        return view('matricula.index', [
+            'matriculas' => null,
+        ]);
     }
+
+    
+    // public function index2()
+    // {
+    //     $lista = [
+    //         'uno' => 121,
+    //         121   => 'dos',
+    //         'tres'=> 'cuatro',
+
+    //     ];
+
+    //     var_dump($lista);
+    //     echo '<pre>' . var_export($lista, true) . '</pre>';
+
+    //     foreach($lista as $elemento) { /* Le estoy diciendo que solo quiero ver los elementos */
+    //         echo $elemento . '<br>';
+    //     }
+
+    //     foreach($lista as $indice => $elemento) { /* Le estoy diciendo que muestre la posicion y el valor */
+    //         echo $elemento . ' está en la posición ' . $indice . '<br>'; 
+    //     }
+    //     dd($lista);
+        
+    // } 
+    
 
     /**
      * Show the form for creating a new resource.
