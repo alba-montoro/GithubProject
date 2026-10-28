@@ -23,7 +23,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="apellidos" class="form-label">Apellidos</label>
-                    <input type="text" value="{{ old('apellidos, $profesor->apellidos') }}" class="form-control" id="apellidos" name="apellidos" required maxlength="130" placeholder="Introduce los apellidos del profesor">
+                    <input type="text" value="{{ old('apellidos', $profesor->apellidos) }}" class="form-control" id="apellidos" name="apellidos" required maxlength="130" placeholder="Introduce los apellidos del profesor">
                     @error('apellidos')
                     <div class="alert alert-danger" role="alert" style="margin-top: 6px;">
                         {{ $message }}
@@ -32,7 +32,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="especialidad" class="form-label">Especialidad</label>
-                    <input type="text" value="{{ old('especialidad, $profesor->especialidad') }}" class="form-control" id="especialidad" name="especialidad" maxlength="100">
+                    <input type="text" value="{{ old('especialidad', $profesor->especialidad) }}" class="form-control" id="especialidad" name="especialidad" maxlength="100">
                     @error('especialidad')
                     <div class="alert alert-danger" role="alert" style="margin-top: 6px;">
                         {{ $message }}
@@ -41,7 +41,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="fechalta" class="form-label">Fecha de alta</label>
-                    <input type="date" value="{{ old('fechalta, $profesor->fechalta') }}" class="form-control" id="fechalta" name="fechalta" max="{{ now()->format('Y-m-d') }}">
+                    <input type="date" value="{{ old('fechalta', $profesor->fechalta) }}" class="form-control" id="fechalta" name="fechalta" max="{{ now()->format('Y-m-d') }}">
                     @error('fechalta')
                     <div class="alert alert-danger" role="alert" style="margin-top: 6px;">
                         {{ $message }}
@@ -50,7 +50,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="salario" class="form-label">Salario</label>
-                    <input type="number" value="{{ old('salario, $profesor->salario') }}" class="form-control" id="salario" name="salario" min="0" max="10000" step="0.01" placeholder="Introduce el salario">
+                    <input type="number" value="{{ old('salario', $profesor->salario) }}" class="form-control" id="salario" name="salario" min="0" max="10000" step="0.01" placeholder="Introduce el salario">
                     @error('salario')
                     <div class="alert alert-danger" role="alert" style="margin-top: 6px;">
                         {{ $message }}
